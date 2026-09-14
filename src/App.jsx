@@ -14,10 +14,12 @@ import Pluribus from './sections/Pluribus.jsx'
 
 /* THE CURTAIN. While the collective sorts out photo rights, the public
    domains show only the under-construction page; the full site stays
-   reachable on staging.titisondecks.com, *.vercel.app and localhost.
+   reachable on staging.titisondecks.com, preview *.vercel.app URLs and localhost.
    Reopening the site = set CURTAIN to false, commit, push. */
 const CURTAIN = true
-const CURTAINED_HOSTS = new Set(['titisondecks.com', 'www.titisondecks.com'])
+// the production titis-on-decks.vercel.app alias is a public face too - curtain
+// it as well; branch/preview *.vercel.app URLs stay open for the team
+const CURTAINED_HOSTS = new Set(['titisondecks.com', 'www.titisondecks.com', 'titis-on-decks.vercel.app'])
 const behindCurtain = () => CURTAIN && CURTAINED_HOSTS.has(window.location.hostname)
 
 /* EVERY PAGE STARTS AT THE TOP - the layout effect below scrolls there
