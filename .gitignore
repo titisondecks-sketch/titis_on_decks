@@ -2,6 +2,7 @@ node_modules/
 dist/
 .vercel
 .env*
+!.env.example
 
 # what `bun run sync-uploads` pulls down from the Blob store - a
 # doorstep for raw phone output, never the source of what the site
