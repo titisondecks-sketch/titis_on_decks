@@ -40,10 +40,16 @@
   <a href="#structure">Structure</a> ·
   <a href="#run-it">Run it</a> ·
   <a href="#hosting">Hosting</a> ·
-  <a href="DEVELOPER.md">Developer notes</a>
+  <a href="DEVELOPER.md">Developer guide</a>
 </p>
 
 ---
+
+The whole site is one small repository: React on Vite, a hand-rolled router in a
+single file, a few serverless functions, and a lot of hand-made light. It is built
+to be read as much as run - one idea per file, comments that say why, nothing that
+needs a framework's manual to follow. Wander the pages below; several are unlisted
+and worth finding.
 
 ## Pages
 
@@ -92,6 +98,9 @@ its own subdomain. Reopening the site = set `CURTAIN` to `false` in
 `src/App.jsx`, commit, push.
 
 ## How it fits together
+
+The whole system on one page - a visitor, a booking, an upload, and where each
+one goes:
 
 ```mermaid
 flowchart LR
@@ -225,6 +234,8 @@ with its own card still shows the site-wide title once the app boots.
 
 ## Run it
 
+Clone it and go - four commands:
+
 ```sh
 bun install
 bun run dev           # local dev server
@@ -233,13 +244,11 @@ bun run test          # bun test --isolate - Bun's own test runner
 bun run sync-uploads  # bring desk uploads down into incoming/
 ```
 
-`bun.lock` is the only lockfile. `dev`, `build`, `preview` and now `test` all run on Bun's own
-runtime (`bun --bun vite`, `bun test --isolate`), which for the build emits a byte-identical
-bundle to Node's. Production runs Bun as well - `vercel.json` pins `bunVersion` to `1.4.x`, so the
-serverless functions in `api/` execute on Bun rather than Node. `package.json` carries the
-same floor as `engines.bun` (`>=1.4.0`), so a contributor's Bun and the one Vercel builds
-with cannot silently disagree - 1.4 is an explicit opt-in on Vercel's side and carries
-breaking changes, which is exactly why the two are written down together.
+Everything runs on Bun - dev, build, tests, and the serverless functions in
+production. `bun.lock` is the only lockfile, `vercel.json` pins `bunVersion` to
+`1.4.x`, and `package.json` asks for the same `>=1.4.0`, so your Bun and Vercel's
+never drift apart. The build comes out byte-identical to Node's, so nothing here is
+Bun-exotic - if you know Vite, you already know your way around.
 
 Working on the code? Start with [DEVELOPER.md](DEVELOPER.md) - routing, common tasks, env vars and tests in one place.
 
