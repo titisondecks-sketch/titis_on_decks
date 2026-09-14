@@ -1,5 +1,6 @@
 import Reveal from '../components/Reveal.jsx'
 import SplitText from '../components/SplitText.jsx'
+import Credit from '../components/Credit.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
 import { PROFILE_URLS } from './sets.js'
 
@@ -45,6 +46,8 @@ export default function Finale({ variant = 'home', live = false }) {
           <p>{t.home.river.right}</p>
           <p><a href={skinLink.href}>{skinLink.label}</a></p>
         </div>
+        {/* living pages only - the drafts stay frozen */}
+        {live && <Credit />}
       </div>
     </footer>
   )

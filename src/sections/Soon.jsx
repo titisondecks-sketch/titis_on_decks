@@ -3,6 +3,7 @@ import Reveal from '../components/Reveal.jsx'
 import SplitText from '../components/SplitText.jsx'
 import Spores from '../components/Spores.jsx'
 import Waveform from '../components/Waveform.jsx'
+import Credit from '../components/Credit.jsx'
 import { WaveMark } from '../home/HomeNav.jsx'
 import { PROFILE_URLS } from '../home/sets.js'
 import { BOOKING_EMAIL } from '../contact.js'
@@ -55,6 +56,8 @@ export default function Soon() {
         <Reveal delay={0.6}>
           <p className="soon-values">{s.values}</p>
         </Reveal>
+
+        <Credit />
       </main>
     </div>
   )

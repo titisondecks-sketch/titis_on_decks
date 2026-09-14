@@ -11,8 +11,8 @@
 
    Env (Vercel project settings - never in the repo):
      RESEND_API_KEY      required for any sending
-     BOOKING_TO          recipient - kai@elita.de while testing,
-                         glittawicca@proton.me once the girls take over
+     BOOKING_TO          recipient - booking@titisondecks.com, forwarding
+                         via ImprovMX into the collective's Gmail
      BOOKING_FROM        optional - "TiTis on Decks <booking@titisondecks.com>"
                          once the domain is verified at Resend. Defaults
                          to Resend's onboarding sender, which only
