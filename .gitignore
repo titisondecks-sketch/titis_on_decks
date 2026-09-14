@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.vercel
+.env*
+
+# what `bun run sync-uploads` pulls down from the Blob store - a
+# doorstep for raw phone output, never the source of what the site
+# serves. Keepers get optimised into public/media/ by hand.
+incoming/

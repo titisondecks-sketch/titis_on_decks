@@ -1,0 +1,3146 @@
+/* ============================================================
+   TITIS ON DECKS - the home page: warm blacklight
+   Torch-lit night. Amber and UV yellow lead, acid green bridges,
+   the old magenta/violet survive only as rare embers.
+
+   Two skins, one page: every color routes through tokens, so
+   html[data-theme='home'] is the warm living look ("/", backed up at
+   #/draft2) and html[data-theme='pink'] ("/pink", backed up at
+   #/draft3) re-skins the exact same sections in the site's archived
+   night palette (void indigo, neon magenta, cyan, UV violet). Those
+   archived styles in site.css stay frozen.
+   ============================================================ */
+
+html[data-theme='home'] {
+  --coal: #120a03;
+  --coal-2: #1e1206;
+  --sun: #ffb32e;
+  --ember: #ff7a2e;
+  --uvy: #f4ff3d;
+  --acid: #b8ff2e;
+  --teal: #37f5e0;
+  --teal-rgb: 55 245 224;
+  --wick: #ff3ecf;
+  --cream: #fff4e0;
+  --cream-dim: #d8b487;
+  --line-h: rgba(255, 179, 46, 0.24);
+
+  --sun-rgb: 255 179 46;
+  --ember-rgb: 255 122 46;
+  --uvy-rgb: 244 255 61;
+  --acid-rgb: 184 255 46;
+  --coal-rgb: 18 10 3;
+  --raise-rgb: 30 18 6;
+
+  --bg-glow-a: #33190a;
+  --bg-glow-b: #241304;
+  --finale-grad: linear-gradient(180deg, var(--coal) 0%, #2a1505 30%, #56280a 55%, #93481a 74%, #d9822e 90%, #ffb35c 100%);
+  --finale-ink: #3a1c07;
+  --finale-ink-line: rgba(58, 28, 7, 0.5);
+  --finale-sub: rgba(255, 246, 230, 0.94);
+  --river-grad: linear-gradient(180deg, #7c5a20, #4c3611);
+  --river-ink: #ffefd2;
+
+  background: var(--coal);
+}
+
+/* the pink skin: the site's archived night palette on the current page */
+html[data-theme='pink'] {
+  --coal: #08041a;
+  --coal-2: #0e0826;
+  --sun: #ff3ecf;
+  --ember: #8a5cff;
+  --uvy: #37f5e0;
+  --acid: #b8ff2e;
+  --teal: #37f5e0;
+  --teal-rgb: 55 245 224;
+  --wick: #ffb32e;
+  --cream: #f0e9ff;
+  --cream-dim: #a99cc9;
+  --line-h: rgba(158, 120, 255, 0.22);
+
+  --sun-rgb: 255 62 207;
+  --ember-rgb: 138 92 255;
+  --uvy-rgb: 55 245 224;
+  --acid-rgb: 184 255 46;
+  --coal-rgb: 8 4 26;
+  --raise-rgb: 14 8 38;
+
+  --bg-glow-a: #1a0f3d;
+  --bg-glow-b: #120a30;
+  --finale-grad: linear-gradient(180deg, var(--coal) 0%, #170d3c 22%, #3c1e63 44%, #83407e 62%, #d4718b 76%, #ffb98a 88%, #ffd9a8 100%);
+  --finale-ink: #2a1245;
+  --finale-ink-line: rgba(42, 18, 69, 0.5);
+  --finale-sub: rgba(255, 244, 235, 0.92);
+  --river-grad: linear-gradient(180deg, #7fb0a2, #4a7a70);
+  --river-ink: #eafff7;
+
+  background: var(--coal);
+}
+
+html:is([data-theme='home'], [data-theme='pink']) body {
+  color: var(--cream);
+  background:
+    radial-gradient(120vw 90vh at 72% -12%, var(--bg-glow-a) 0%, transparent 60%),
+    radial-gradient(90vw 70vh at 6% 28%, var(--bg-glow-b) 0%, transparent 55%),
+    var(--coal);
+}
+
+html:is([data-theme='home'], [data-theme='pink']) ::selection { background: var(--sun); color: var(--coal); }
+
+html:is([data-theme='home'], [data-theme='pink']) a { color: var(--sun); text-decoration-color: rgb(var(--sun-rgb) / 0.4); }
+html:is([data-theme='home'], [data-theme='pink']) a:hover { text-decoration-color: var(--sun); }
+
+html:is([data-theme='home'], [data-theme='pink']) :focus-visible {
+  outline: 2px solid var(--uvy);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* EMOTIQ (the collective's own font) carries the display titles on the
+   living pages - hero, finale, Sunrise Radio. The drafts are backups
+   of the Monoton stage, so the font rides its own data-font axis,
+   set by App.jsx alongside data-theme. */
+html[data-font='emotiq'] {
+  --font-display: 'EMOTIQ', 'Monoton', 'Arial Black', sans-serif;
+}
+
+/* the pink hero letters mirror the archived night site exactly: cyan "on", violet "Decks" */
+html[data-theme='pink'] .h-title .t-on {
+  color: var(--teal);
+  text-shadow: 0 0 14px rgb(55 245 224 / 0.8);
+}
+
+html[data-theme='pink'] .h-title .t-uvy {
+  color: #a583ff;
+  text-shadow: 0 0 18px rgb(109 59 255 / 0.95), 0 0 70px rgb(109 59 255 / 0.5);
+}
+
+/* ---------- nav ---------- */
+
+.h-nav {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem var(--pad);
+  background: linear-gradient(rgb(var(--coal-rgb) / 0.93), rgb(var(--coal-rgb) / 0.55) 70%, transparent);
+  backdrop-filter: blur(6px);
+}
+
+.h-mark {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  color: var(--cream);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.h-mark svg { color: var(--sun); filter: drop-shadow(0 0 5px rgb(var(--sun-rgb) / 0.8)); }
+
+.h-nav-links {
+  display: flex;
+  gap: clamp(0.8rem, 2.5vw, 2rem);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.h-nav-links a { color: var(--cream-dim); text-decoration: none; padding: 0.2rem 0; }
+.h-nav-links a:hover { color: var(--uvy); text-shadow: 0 0 12px rgb(var(--uvy-rgb) / 0.7); }
+
+/* the radio pill + language switcher reuse .nav-right / .nav-radio / .lang
+   from site.css - they are palette-neutral warm already */
+
+/* ---------- hero ---------- */
+
+.h-hero {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: calc(var(--pad) + 3rem) var(--pad) 0;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* the real canopy, faint, full-bleed behind everything */
+.h-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.16;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 96%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 96%);
+  pointer-events: none;
+}
+
+/* slow torch-glow breathing behind the title */
+.h-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(46rem 30rem at 50% 58%, rgb(var(--ember-rgb) / 0.17), transparent 70%),
+    radial-gradient(30rem 20rem at 32% 40%, rgb(var(--sun-rgb) / 0.1), transparent 70%);
+  animation: h-torch 7s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes h-torch {
+  from { opacity: 0.65; transform: scale(1); }
+  55%  { opacity: 1; }
+  to   { opacity: 0.8; transform: scale(1.06); }
+}
+
+.h-laser {
+  position: absolute;
+  top: -10%;
+  width: 200vmax;
+  height: 2px;
+  z-index: -1;
+  opacity: 0.5;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.h-laser::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0;
+  filter: blur(1px);
+  background: inherit;
+}
+
+.h-laser-a { left: -4%; background: linear-gradient(90deg, var(--sun), transparent 70%); animation: sweep-a 11s ease-in-out infinite alternate; }
+.h-laser-b { left: -4%; background: linear-gradient(90deg, var(--uvy), transparent 70%); animation: sweep-b 13s ease-in-out infinite alternate; }
+.h-laser-c { right: -4%; background: linear-gradient(90deg, var(--acid), transparent 70%); transform-origin: 100% 0; animation: sweep-c 17s ease-in-out infinite alternate; }
+
+.h-hero-inner { display: grid; gap: 1.4rem; justify-items: center; max-width: 62rem; }
+
+.h-eyebrow {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--acid);
+  filter: drop-shadow(0 0 10px rgb(var(--acid-rgb) / 0.45));
+  margin: 0;
+}
+
+.h-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 9.5vw, 7rem);
+  line-height: 1.04;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.h-title .row { display: block; }
+
+.h-title .t-sun {
+  color: var(--sun);
+  text-shadow: 0 0 18px rgb(var(--sun-rgb) / 0.9), 0 0 70px rgb(var(--ember-rgb) / 0.5);
+}
+
+.h-title .t-on {
+  display: block;
+  font-size: 0.32em;
+  color: var(--acid);
+  text-shadow: 0 0 14px rgb(var(--acid-rgb) / 0.8);
+  letter-spacing: 0.5em;
+  margin: 0.5em 0;
+}
+
+.h-title .t-uvy {
+  color: var(--uvy);
+  text-shadow: 0 0 18px rgb(var(--uvy-rgb) / 0.85), 0 0 70px rgb(var(--uvy-rgb) / 0.4);
+}
+
+.h-sub {
+  max-width: 44ch;
+  margin: 0;
+  color: var(--cream-dim);
+  font-size: var(--step-1);
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.h-cta-row { display: flex; flex-wrap: wrap; gap: 0.9rem; justify-content: center; margin-top: 0.6rem; }
+
+.h-btn {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--sun);
+  color: var(--sun);
+  background: rgb(var(--sun-rgb) / 0.07);
+  box-shadow: 0 0 18px rgb(var(--sun-rgb) / 0.25), inset 0 0 12px rgb(var(--sun-rgb) / 0.1);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  animation: h-btn-pulse 3.6s ease-in-out infinite;
+}
+
+.h-btn:hover {
+  background: rgb(var(--sun-rgb) / 0.16);
+  box-shadow: 0 0 30px rgb(var(--sun-rgb) / 0.55), inset 0 0 16px rgb(var(--sun-rgb) / 0.2);
+  transform: translateY(-1px);
+  animation-play-state: paused;
+}
+
+@keyframes h-btn-pulse {
+  0%, 100% { box-shadow: 0 0 18px rgb(var(--sun-rgb) / 0.22), inset 0 0 12px rgb(var(--sun-rgb) / 0.1); }
+  50%      { box-shadow: 0 0 26px rgb(var(--sun-rgb) / 0.4), inset 0 0 12px rgb(var(--sun-rgb) / 0.12); }
+}
+
+.h-btn-ghost {
+  border-color: rgb(var(--uvy-rgb) / 0.7);
+  color: var(--uvy);
+  background: rgb(var(--uvy-rgb) / 0.05);
+  box-shadow: 0 0 18px rgb(var(--uvy-rgb) / 0.16), inset 0 0 12px rgb(var(--uvy-rgb) / 0.08);
+  animation: none;
+}
+
+.h-btn-ghost:hover {
+  background: rgb(var(--uvy-rgb) / 0.13);
+  box-shadow: 0 0 30px rgb(var(--uvy-rgb) / 0.4), inset 0 0 16px rgb(var(--uvy-rgb) / 0.16);
+}
+
+/* animated equalizer - the logo's waveform, alive */
+.h-wave { display: flex; align-items: flex-end; gap: 4px; height: 34px; }
+.h-wave-inline { height: 16px; gap: 3px; }
+.h-wave-inline i { width: 3px; }
+.h-wave i {
+  width: 4px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--uvy), var(--ember));
+  box-shadow: 0 0 8px rgb(var(--sun-rgb) / 0.55);
+}
+
+/* ---------- shared section shell (warm) ---------- */
+
+.h-section {
+  position: relative;
+  padding: clamp(4rem, 10vh, 7rem) var(--pad);
+  max-width: 72rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 2.2rem;
+}
+
+.h-head { display: grid; gap: 0.5rem; }
+
+.h-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--acid);
+  text-shadow: 0 0 10px rgb(var(--acid-rgb) / 0.45);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.h-h2 {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: var(--step-3);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--cream);
+}
+
+.h-h2 em {
+  font-style: normal;
+  color: var(--sun);
+  text-shadow: 0 0 22px rgb(var(--sun-rgb) / 0.6);
+}
+
+/* ---------- who we are ---------- */
+
+.h-who-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.h-copy { max-width: var(--measure); display: grid; gap: 1rem; }
+.h-copy p { margin: 0; color: var(--cream-dim); }
+.h-copy strong { color: var(--cream); font-weight: 600; }
+
+.h-facts {
+  border: 1px solid var(--line-h);
+  border-radius: 4px;
+  padding: 1.4rem 1.5rem;
+  background: linear-gradient(160deg, rgb(var(--ember-rgb) / 0.08), rgb(var(--coal-rgb) / 0.4));
+  display: grid;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.h-facts dl { margin: 0; display: grid; gap: 0.9rem; }
+.h-facts dt { color: var(--uvy); letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.68rem; }
+.h-facts dd { margin: 0.15rem 0 0; color: var(--cream); }
+
+.h-who-photo {
+  margin: 0;
+  border: 1px solid var(--line-h);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.h-who-photo img { display: block; width: 100%; height: auto; }
+
+/* ---------- our story ---------- */
+
+.h-quote {
+  margin: 0;
+  max-width: 30ch;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: var(--step-2);
+  line-height: 1.25;
+  color: var(--cream);
+}
+
+.h-quote em {
+  font-style: normal;
+  color: var(--uvy);
+  text-shadow: 0 0 20px rgb(var(--uvy-rgb) / 0.55);
+}
+
+.h-story-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+/* ---------- what we create ---------- */
+
+.h-genres { display: flex; flex-wrap: wrap; gap: 0.6rem; max-width: 46rem; }
+
+.h-genre {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.42rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-h);
+  color: var(--cream-dim);
+  background: rgb(var(--raise-rgb) / 0.55);
+  transition: color 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.h-genre:hover {
+  color: var(--coal);
+  border-color: var(--sun);
+  background: var(--sun);
+  box-shadow: 0 0 22px rgb(var(--sun-rgb) / 0.55);
+  transform: translateY(-2px);
+}
+
+.h-statement {
+  margin: 0;
+  max-width: 34ch;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: var(--step-2);
+  line-height: 1.22;
+  color: var(--cream);
+}
+
+.h-statement em {
+  font-style: normal;
+  color: var(--ember);
+  text-shadow: 0 0 22px rgb(var(--ember-rgb) / 0.6);
+}
+
+/* ---------- sound / set cards (warm remix of .set-card) ---------- */
+
+.h-sets { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.2rem; }
+.h-sets > div { display: grid; }
+
+.h-set {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line-h);
+  border-radius: 4px;
+  padding: 1.5rem 1.5rem 1.3rem;
+  display: grid;
+  gap: 0.8rem;
+  align-content: start;
+  background: linear-gradient(170deg, rgb(var(--raise-rgb) / 0.9), rgb(var(--coal-rgb) / 0.6));
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.h-set-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 20%;
+  opacity: 0;
+  transition: opacity 350ms ease;
+}
+
+.h-set-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(var(--coal-rgb) / 0.3), rgb(var(--coal-rgb) / 0.88) 78%);
+}
+
+.h-set:hover .h-set-photo,
+.h-set:focus-visible .h-set-photo { opacity: 1; }
+
+.h-set > :not(.h-set-photo):not(.h-set-artist) { position: relative; }
+
+.h-set-artist {
+  position: absolute;
+  z-index: 1;
+  top: 1.1rem;
+  right: 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--uvy);
+  text-shadow: 0 0 12px rgb(var(--uvy-rgb) / 0.6);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 350ms ease, transform 350ms ease;
+}
+
+.h-set:hover .h-set-artist,
+.h-set:focus-visible .h-set-artist { opacity: 1; transform: none; }
+
+.h-set:hover {
+  border-color: var(--sun);
+  box-shadow: 0 0 26px rgb(var(--sun-rgb) / 0.22);
+  transform: translateY(-2px);
+}
+
+.h-set-play {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid var(--sun);
+  display: grid;
+  place-items: center;
+  color: var(--sun);
+  box-shadow: 0 0 14px rgb(var(--sun-rgb) / 0.35);
+}
+
+.h-set-title { font-weight: 600; font-size: 1.05rem; color: var(--cream); margin: 0; }
+.h-set-desc { margin: 0; color: var(--cream-dim); font-size: 0.9rem; }
+
+.h-set-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--acid);
+}
+
+.h-profiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.h-note { font-family: var(--font-mono); font-size: 0.78rem; color: var(--cream-dim); margin: 0; line-height: 2; }
+
+/* ---------- flyer / next gathering (warm remix) ---------- */
+
+.h-flyer {
+  border: 1px solid rgb(var(--sun-rgb) / 0.45);
+  border-radius: 6px;
+  overflow: hidden;
+  background:
+    radial-gradient(60rem 24rem at 85% -20%, rgb(var(--ember-rgb) / 0.15), transparent 60%),
+    radial-gradient(50rem 30rem at 0% 120%, rgb(var(--uvy-rgb) / 0.08), transparent 55%),
+    var(--coal-2);
+  box-shadow: 0 0 40px rgb(var(--sun-rgb) / 0.12);
+}
+
+.h-flyer .flyer-top,
+.h-flyer .flyer-foot { border-color: rgb(var(--sun-rgb) / 0.35); }
+
+.h-flyer .flyer-name em {
+  color: var(--sun);
+  text-shadow: 0 0 20px rgb(var(--sun-rgb) / 0.6);
+}
+
+.h-flyer .flyer-meta { color: var(--acid); }
+
+.h-flyer .timetable th { color: var(--cream-dim); }
+.h-flyer .timetable th, .h-flyer .timetable td { border-top-color: rgb(var(--sun-rgb) / 0.14); }
+.h-flyer .timetable .tt-time { color: var(--uvy); }
+.h-flyer .timetable .tt-act { color: var(--cream); }
+.h-flyer .timetable .tt-style { color: var(--cream-dim); }
+
+.h-flyer .timetable .is-headline .tt-act {
+  color: var(--ember);
+  text-shadow: 0 0 16px rgb(var(--ember-rgb) / 0.6);
+}
+
+/* ---------- live / featured clip ---------- */
+
+.h-live { margin: 0; display: grid; gap: 0.75rem; justify-items: start; }
+
+.h-live-frame {
+  width: 100%;
+  max-width: 56rem;
+  border: 1px solid rgb(var(--sun-rgb) / 0.45);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--coal-2);
+  box-shadow: 0 0 40px rgb(var(--ember-rgb) / 0.16), 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.h-live-frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+/* ---------- gallery ---------- */
+
+.h-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.2rem; }
+.h-gallery > div { display: grid; }
+
+.h-tile { display: grid; gap: 0.65rem; margin: 0; }
+
+.h-tile-media {
+  aspect-ratio: 4 / 3;
+  border-radius: 4px;
+  border: 1px solid var(--line-h);
+  position: relative;
+  overflow: hidden;
+  background: var(--coal-2);
+}
+
+.h-tile-media img,
+.h-tile-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* faint CRT scanlines, same trick as the draft's tiles */
+.h-tile-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgb(var(--coal-rgb) / 0.12) 0 1px, transparent 1px 4px);
+  pointer-events: none;
+}
+
+.h-tile-live {
+  position: absolute;
+  z-index: 1;
+  top: 0.6rem;
+  right: 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--coal);
+  background: var(--uvy);
+  border-radius: 999px;
+  padding: 0.14rem 0.5rem;
+  box-shadow: 0 0 14px rgb(var(--uvy-rgb) / 0.7);
+}
+
+.h-caption {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+.h-caption::before { content: "▸ "; color: var(--ember); }
+
+/* ---------- finale / booking footer ---------- */
+
+.h-finale {
+  margin-top: clamp(4rem, 10vh, 7rem);
+  position: relative;
+  text-align: center;
+  padding: clamp(6rem, 16vh, 10rem) var(--pad) 0;
+  background: var(--finale-grad);
+}
+
+.h-finale-inner { display: grid; gap: 1.2rem; justify-items: center; }
+
+.h-finale-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--acid);
+  margin: 0;
+}
+
+.h-finale-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.1rem, 7.5vw, 4.4rem);
+  line-height: 1.14;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 0 24px rgb(var(--sun-rgb) / 0.9), 0 0 70px rgb(var(--ember-rgb) / 0.5);
+}
+
+/* one word per line, on purpose */
+.h-finale-line { display: block; }
+
+.h-finale-sub { margin: 0; max-width: 52ch; color: var(--finale-sub); }
+
+.h-finale-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-top: 0.8rem;
+}
+
+.h-finale-links a { color: var(--finale-ink); text-decoration-color: var(--finale-ink-line); font-weight: 700; }
+
+.h-river {
+  margin-top: clamp(3rem, 8vh, 5rem);
+  padding: 1.6rem var(--pad) 2rem;
+  background: var(--river-grad);
+  color: var(--river-ink);
+}
+
+.h-river-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+}
+
+.h-river-inner p { margin: 0; }
+.h-river-inner a { color: inherit; }
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 46rem) {
+  .h-who-grid, .h-story-grid { grid-template-columns: 1fr; }
+  .h-nav-links { display: none; }
+}
+
+/* phones: icon-only wordmark, tighter nav so DE/PT/EN never clip */
+@media (max-width: 30rem) {
+  .h-mark-text { display: none; }
+  .h-nav { gap: 0.6rem; }
+  .h-nav .nav-right { gap: 0.6rem; }
+  .h-nav .nav-radio { font-size: 0.66rem; padding: 0.24rem 0.55rem; }
+  .h-nav .lang { gap: 0.15rem; }
+  .h-nav .lang button { padding: 0.22rem 0.4rem; font-size: 0.68rem; }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .h-laser { animation: none; opacity: 0.25; }
+  .h-hero::before { animation: none; }
+  .h-btn { animation: none; transition: none; }
+  .h-set, .h-genre { transition: none; }
+}
+
+/* ---------- /carla - the artist page (living, unlisted) ---------- */
+
+.artist {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+}
+
+.artist-atmo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.artist-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--pad);
+}
+
+.artist-back {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+}
+
+.artist-back:hover { text-shadow: 0 0 12px rgb(var(--sun-rgb) / 0.6); }
+
+.artist-main {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 8vh, 5rem) var(--pad) clamp(3rem, 9vh, 6rem);
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.artist-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--teal);
+  filter: drop-shadow(0 0 10px rgb(var(--teal-rgb) / 0.5));
+  margin: 0;
+}
+
+.artist-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 11vw, 4.75rem);
+  line-height: 0.95;
+  color: var(--cream);
+  margin: 0;
+  text-shadow: 0 0 24px rgb(var(--sun-rgb) / 0.85), 0 0 80px rgb(var(--ember-rgb) / 0.5);
+}
+
+.artist-line { display: block; }
+
+/* scoped past the theme's global link colour on line 91, which is
+   html:is([data-theme=...]) a - specificity (0,1,2), so a bare .artist-cta
+   loses to it and the label was painted --sun on a --sun pill. */
+.artist-main .artist-cta {
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--coal);
+  background: var(--sun);
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.artist-main .artist-cta:hover {
+  box-shadow: 0 0 28px rgb(var(--sun-rgb) / 0.75);
+  transform: translateY(-2px);
+}
+
+.artist-figure {
+  width: min(22rem, 82vw);
+  margin: 0.5rem 0 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgb(var(--coal-rgb) / 0.8), 0 0 45px rgb(var(--ember-rgb) / 0.35);
+}
+
+.artist-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.artist-caption {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+.artist-intro {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--cream);
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+.artist-note {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
+  margin: 0;
+  max-width: 52ch;
+}
+
+/* ---------- /glitta - Glitta's own page (living, unlisted) ----------
+
+   Carla's featured-artist layout in Glitta's colors. The pink skin
+   already carries her magenta and violet; only the kicker changes,
+   from Carla's cyan to UV violet - pink and purple, as requested. */
+
+.glitta {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+}
+
+.glitta-atmo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.glitta-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--pad);
+}
+
+.glitta-back {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+}
+
+.glitta-back:hover { text-shadow: 0 0 12px rgb(var(--sun-rgb) / 0.6); }
+
+.glitta-main {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 8vh, 5rem) var(--pad) clamp(3rem, 9vh, 6rem);
+  display: grid;
+  gap: 1.5rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.glitta-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #a583ff;
+  filter: drop-shadow(0 0 10px rgb(138 92 255 / 0.55));
+  margin: 0;
+}
+
+.glitta-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(3rem, 12vw, 6.5rem);
+  line-height: 1;
+  color: var(--cream);
+  margin: 0;
+  text-shadow: 0 0 24px rgb(var(--sun-rgb) / 0.85), 0 0 80px rgb(var(--ember-rgb) / 0.5);
+}
+
+.glitta-figure {
+  width: min(22rem, 82vw);
+  margin: 0.5rem 0 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgb(var(--coal-rgb) / 0.8), 0 0 45px rgb(var(--ember-rgb) / 0.35);
+}
+
+.glitta-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.glitta-caption {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+.glitta-intro {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--cream);
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+.glitta-listen {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--cream-dim);
+  margin: 0;
+}
+
+.glitta-note {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
+  margin: 0;
+  max-width: 52ch;
+}
+
+/* The deck sits between the SoundCloud line and the closing note: the
+   one thing on the page that plays, modeled on the deleted /dalal deck
+   (baseline home.css, before the turntable was cut) but on this page's
+   own tokens and spacing rather than a wrapper of its own. */
+
+.glitta-deck {
+  width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.glitta-deck-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0;
+  font-weight: 400;
+}
+
+.glitta-deck-line {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--cream);
+  font-size: var(--step-0);
+  line-height: 1.7;
+}
+
+/* ---------- turntable ----------
+
+   The turntable from sun_dra's Steely San, on the skin's tokens: a sun
+   sleeve with an ember drop shadow behind a coal record, the label paper
+   in ember, the arm in the dim cream of a well-handled thing and its
+   head in the magenta the button already wears. The sleeve slides out
+   once the needle is down. The record's angle is a motion value on the
+   platter, so the label turns with it and nothing here is a CSS
+   animation that would need pausing and resuming. On the pink skin the
+   sun sleeve reads magenta and the ember shadow violet, same rules,
+   other tokens. */
+
+.tt {
+  width: min(22rem, 78vw);
+  margin: 0.8rem auto 0;
+  display: grid;
+  justify-items: center;
+  gap: 1.2rem;
+}
+
+.tt-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.tt-sleeve {
+  position: absolute;
+  inset: 0;
+  padding: 0.9rem;
+  border-radius: 10px;
+  background: var(--sun);
+  box-shadow: 8px 8px 0 var(--ember);
+  color: var(--coal);
+  text-align: left;
+}
+
+.tt-sleeve-inner {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0.7rem;
+  border: 4px solid rgb(var(--coal-rgb) / 0.55);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Qualified by the sleeve on purpose: the skin colours every link sun
+   (html:is([data-theme]) a, above), which outranks a lone class - and sun
+   on the sun sleeve is a name nobody can read. */
+.tt-sleeve .tt-artist {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 6vw, 2.1rem);
+  line-height: 1;
+  color: var(--coal);
+  text-decoration: none;
+}
+
+.tt-sleeve .tt-artist:hover,
+.tt-sleeve .tt-artist:focus-visible { color: var(--ember); }
+
+.tt-title {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.tt-cat {
+  margin: 0.25rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  color: rgb(var(--coal-rgb) / 0.75);
+}
+
+.tt-stripes {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.tt-stripe {
+  display: block;
+  height: 0.5rem;
+  border-radius: 999px;
+}
+
+/* The record is the control. Round, so a press on a corner of the stage
+   reaches the sleeve behind it rather than the needle. */
+.tt-platter {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tt-platter:focus-visible {
+  outline: 3px solid var(--acid);
+  outline-offset: 6px;
+}
+
+.tt-vinyl {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at center, rgb(255 255 255 / 0.05) 0 2px, transparent 2px 6px),
+    var(--coal-2);
+  box-shadow:
+    0 18px 40px rgb(var(--coal-rgb) / 0.7),
+    inset 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+
+.tt-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 200deg,
+    transparent 0deg,
+    rgb(255 255 255 / 0.14) 40deg,
+    transparent 80deg,
+    transparent 200deg,
+    rgb(255 255 255 / 0.1) 240deg,
+    transparent 280deg
+  );
+}
+
+.tt-paper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 36%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--ember);
+  color: var(--cream);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.tt-paper-artist,
+.tt-paper-title,
+.tt-paper-cat {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tt-paper-artist {
+  top: 15%;
+  font-family: var(--font-display);
+  font-size: clamp(0.55rem, 2.3vw, 0.8rem);
+  letter-spacing: 0.2em;
+}
+
+.tt-paper-title {
+  bottom: 24%;
+  font-size: clamp(0.4rem, 1.7vw, 0.56rem);
+  letter-spacing: 0.22em;
+}
+
+.tt-paper-cat {
+  bottom: 12%;
+  font-size: clamp(0.36rem, 1.5vw, 0.5rem);
+  letter-spacing: 0.14em;
+  opacity: 0.85;
+}
+
+.tt-hole {
+  width: 10%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--cream);
+}
+
+.tt-tonearm {
+  position: absolute;
+  right: -0.75rem;
+  top: -0.75rem;
+  display: block;
+  width: 1rem;
+  height: 62%;
+  transform-origin: 50% 0;
+}
+
+.tt-pivot {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1.75rem;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--cream-dim);
+  box-shadow: 0 3px 0 var(--coal);
+}
+
+.tt-rod {
+  display: block;
+  margin: 0 auto;
+  width: 6px;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--cream-dim);
+}
+
+.tt-head {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0.75rem;
+  height: 2rem;
+  translate: -50% 0;
+  border-radius: 0 0 6px 6px;
+  background: var(--wick);
+}
+
+.tt-cue {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.tt-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 1rem;
+}
+
+.tt-eq span {
+  display: block;
+  width: 3px;
+  height: 1rem;
+  border-radius: 2px;
+  background: var(--acid);
+  transform-origin: 50% 100%;
+}
+
+/* ---------- /nubreed - MULTIVERSE IV · Amazonia (living, unlisted) ----------
+
+   Warm blacklight, because the artwork is a bronze sunset and the pink
+   skin would fight it. Every piece of live text sits on flat --coal, never
+   over the flyer: contrast on a colour can be computed, contrast over an
+   image cannot. */
+
+.nb {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+}
+
+.nb-atmo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.nb-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--pad);
+}
+
+.nb-back {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+}
+
+.nb-back:hover { text-shadow: 0 0 12px rgb(var(--sun-rgb) / 0.6); }
+
+.nb-main {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vh, 4rem) var(--pad) clamp(3rem, 9vh, 6rem);
+  display: grid;
+  gap: 1.6rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.nb-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+  color: var(--acid);
+  filter: drop-shadow(0 0 10px rgb(var(--acid-rgb) / 0.45));
+  margin: 0;
+}
+
+.nb-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.8rem, 11vw, 6rem);
+  line-height: 1;
+  color: var(--cream);
+  margin: 0;
+  text-shadow: 0 0 24px rgb(var(--sun-rgb) / 0.85), 0 0 80px rgb(var(--ember-rgb) / 0.5);
+}
+
+.nb-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: -0.6rem 0 0;
+}
+
+/* ---- the visualiser leads ---- */
+
+.nb-figure {
+  margin: 0.4rem 0 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+}
+
+.nb-video {
+  width: min(20rem, 74vw);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgb(var(--coal-rgb) / 0.85), 0 0 45px rgb(var(--ember-rgb) / 0.32);
+}
+
+.nb-video video {
+  display: block;
+  width: 100%;
+  height: auto;          /* 9:16, its own aspect - never letterboxed */
+  aspect-ratio: 9 / 16;  /* holds the box before metadata arrives, so the
+                            page does not jump when the poster loads */
+  background: var(--coal);
+}
+
+.nb-video-note {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.7;
+  color: var(--cream-dim);
+  margin: 0;
+  max-width: 34ch;
+  text-align: center;
+}
+
+/* the poster is one tap away rather than a second copy of the artwork */
+.nb-flyer-btn {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--line-h);
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  margin: 0.2rem 0 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.nb-flyer-btn:hover {
+  border-color: rgb(var(--sun-rgb) / 0.75);
+  background: rgb(var(--raise-rgb) / 0.9);
+}
+
+.nb-flyer-btn:focus-visible {
+  outline: 2px solid var(--sun);
+  outline-offset: 4px;
+}
+
+.nb-intro {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--cream);
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+/* ---- when / where / host ---- */
+
+/* Reveal wraps each block in a div. Under `justify-items: center` that
+   div shrinks to its content, so blocks with narrower text sat visibly
+   indented against blocks with wider text. The measure belongs to the
+   wrapper, and the content simply fills it. */
+.nb-block { width: min(34rem, 100%); }
+
+.nb-facts {
+  margin: 0.4rem 0 0;
+  display: grid;
+  gap: 0.9rem;
+  width: 100%;
+  text-align: left;
+}
+
+.nb-fact {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line-h);
+}
+
+.nb-fact dt {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sun);
+}
+
+.nb-fact dd {
+  margin: 0;
+  color: var(--cream);
+  line-height: 1.6;
+}
+
+/* ---- line-up and the soundtrack share a heading and a list rhythm ---- */
+
+.nb-lineup,
+.nb-sound {
+  width: 100%;
+  text-align: left;
+  margin: 0.4rem 0 0;
+}
+
+.nb-lineup-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0 0 0.9rem;
+  font-weight: 400;
+}
+
+.nb-lineup ul,
+.nb-sound ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.nb-lineup li {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.nb-dj {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.06rem;
+  color: var(--cream);
+}
+
+.nb-dj-note,
+.nb-track-by {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--cream-dim);
+}
+
+.nb-sound li a {
+  display: grid;
+  gap: 0.15rem;
+  text-decoration: none;
+  padding: 0.55rem 0.8rem;
+  margin: 0 -0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--line-h);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.nb-sound li a:hover,
+.nb-sound li a:focus-visible {
+  border-color: rgb(var(--sun-rgb) / 0.7);
+  background: rgb(var(--raise-rgb) / 0.9);
+}
+
+.nb-track {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--cream);
+}
+
+.nb-sound-note {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.8;
+  color: var(--cream-dim);
+  margin: 0.9rem 0 0;
+}
+
+/* ---- the admission ---- */
+
+.nb-wink {
+  width: 100%;
+  text-align: left;
+  margin: 0.8rem 0 0;
+  padding: 1rem 1.1rem;
+  border-left: 2px solid var(--uvy);
+  background: rgb(var(--raise-rgb) / 0.85);
+  border-radius: 0 8px 8px 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
+}
+
+.nb-close {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 1.4rem 0 0;
+}
+
+/* ---------- /soon - the curtain page ---------- */
+
+.soon {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.soon-atmo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.soon-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--pad);
+}
+
+.soon-mark {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  color: var(--cream);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.soon-mark svg { color: var(--sun); filter: drop-shadow(0 0 5px rgb(var(--sun-rgb) / 0.8)); }
+
+.soon-main {
+  position: relative;
+  z-index: 1;
+  align-self: center;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem var(--pad) clamp(3rem, 10vh, 6rem);
+  display: grid;
+  gap: 1.4rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.soon-kicker {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.8vw, 0.85rem);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--acid);
+  filter: drop-shadow(0 0 10px rgb(var(--acid-rgb) / 0.45));
+  margin: 0;
+}
+
+.soon-title { font-size: clamp(2.4rem, 8.5vw, 5.5rem); }
+
+.soon-line {
+  margin: 0;
+  max-width: 40ch;
+  color: var(--cream);
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+.soon-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.soon-values {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  margin: 0.6rem 0 0;
+}
+
+/* ---------- booking form (living pages only) ---------- */
+
+.bk-form { display: grid; gap: 1.15rem; max-width: 46rem; }
+
+.bk-intro { margin: 0; color: var(--cream-dim); max-width: var(--measure); }
+
+.bk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr)); gap: 1.15rem; }
+
+.bk-field { display: grid; gap: 0.45rem; }
+
+.bk-field > span {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--uvy);
+}
+
+.bk-field input,
+.bk-field textarea {
+  font: inherit;
+  color: var(--cream);
+  background: rgb(var(--raise-rgb) / 0.55);
+  border: 1px solid var(--line-h);
+  border-radius: 4px;
+  padding: 0.7rem 0.85rem;
+  color-scheme: dark;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.bk-field input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.7) sepia(1) saturate(5) hue-rotate(345deg);
+}
+
+.bk-field input::placeholder,
+.bk-field textarea::placeholder { color: var(--cream-dim); opacity: 0.55; }
+
+.bk-field input:focus-visible,
+.bk-field textarea:focus-visible {
+  outline: none;
+  border-color: var(--sun);
+  box-shadow: 0 0 18px rgb(var(--sun-rgb) / 0.3), inset 0 0 10px rgb(var(--sun-rgb) / 0.08);
+}
+
+.bk-field textarea { resize: vertical; min-height: 8rem; }
+
+/* the honeypot field - humans never see it, bots fill it */
+.bk-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+.bk-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; }
+
+.bk-submit { cursor: pointer; }
+.bk-submit:disabled { opacity: 0.6; cursor: wait; animation: none; }
+
+.bk-note { margin: 0; font-family: var(--font-mono); font-size: 0.78rem; color: var(--cream-dim); }
+
+.bk-done { display: grid; gap: 0.6rem; max-width: 46rem; }
+
+.bk-done-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+  color: var(--sun);
+  text-shadow: 0 0 22px rgb(var(--sun-rgb) / 0.7);
+}
+
+.bk-done-line { margin: 0; color: var(--cream); max-width: 52ch; }
+
+/* ---------- the upload desk - uploads.titisondecks.com ---------- */
+
+/* the curtain page centers one short line; the desk holds a form and a
+   growing list, so it starts at the top and keeps the warm atmosphere */
+.up-main {
+  position: relative;
+  z-index: 1;
+  align-self: start;
+  width: 100%;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(1rem, 4vh, 2.5rem) var(--pad) clamp(3rem, 10vh, 6rem);
+  display: grid;
+  gap: 1.6rem;
+}
+
+.up-title {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.05;
+  font-size: clamp(2rem, 7vw, 3.4rem);
+  color: var(--cream);
+}
+
+.up-title em {
+  font-style: normal;
+  color: var(--sun);
+  text-shadow: 0 0 24px rgb(var(--sun-rgb) / 0.65);
+}
+
+.up-intro { margin: 0.9rem 0 0; color: var(--cream-dim); max-width: var(--measure); }
+
+.up-form { max-width: none; }
+
+.up-file {
+  font: inherit;
+  color: var(--cream-dim);
+  background: rgb(var(--raise-rgb) / 0.55);
+  border: 1px dashed var(--line-h);
+  border-radius: 4px;
+  padding: 1rem 0.85rem;
+  cursor: pointer;
+}
+
+.up-file::file-selector-button {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--uvy);
+  background: rgb(var(--uvy-rgb) / 0.07);
+  border: 1px solid rgb(var(--uvy-rgb) / 0.55);
+  border-radius: 999px;
+  padding: 0.5rem 1.1rem;
+  margin-right: 0.9rem;
+  cursor: pointer;
+  transition: background 160ms ease, box-shadow 160ms ease;
+}
+
+.up-file::file-selector-button:hover {
+  background: rgb(var(--uvy-rgb) / 0.15);
+  box-shadow: 0 0 18px rgb(var(--uvy-rgb) / 0.3);
+}
+
+.up-file:focus-visible { outline: none; border-color: var(--sun); }
+
+.up-hint { margin: 0; font-family: var(--font-mono); font-size: 0.72rem; color: var(--cream-dim); opacity: 0.75; }
+
+.up-fault { color: var(--ember); }
+
+.up-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+
+.up-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0.4rem 1rem;
+  padding: 0.75rem 0.9rem;
+  background: rgb(var(--raise-rgb) / 0.45);
+  border: 1px solid var(--line-h);
+  border-radius: 4px;
+}
+
+.up-name { color: var(--cream); word-break: break-word; }
+
+.up-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+.up-item.is-done .up-meta { color: var(--acid); }
+.up-item.is-error .up-meta { color: var(--ember); }
+
+/* the fill is the only moving part - width transitions, nothing else */
+.up-bar {
+  grid-column: 1 / -1;
+  height: 3px;
+  border-radius: 999px;
+  background: rgb(var(--coal-rgb) / 0.8);
+  overflow: hidden;
+}
+
+.up-bar i {
+  display: block;
+  height: 100%;
+  background: var(--sun);
+  box-shadow: 0 0 12px rgb(var(--sun-rgb) / 0.7);
+  transition: width 200ms ease;
+}
+
+.up-item.is-done .up-bar i { background: var(--acid); box-shadow: 0 0 12px rgb(var(--acid-rgb) / 0.7); }
+.up-item.is-error .up-bar i { background: var(--ember); box-shadow: none; }
+
+/* the second attempt carries no byte count, so the bar breathes across
+   its full width instead of claiming a position it cannot know */
+.up-item.is-blind .up-bar i { animation: up-blind 1.4s ease-in-out infinite; }
+
+@keyframes up-blind {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .up-item.is-blind .up-bar i { animation: none; opacity: 0.7; }
+}
+
+/* ---------- the dashboard - what already landed ---------- */
+
+.desk-tabs {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  padding: 0 var(--pad);
+}
+
+.gal-btn {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  background: rgb(var(--raise-rgb) / 0.5);
+  border: 1px solid var(--line-h);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.gal-btn:hover { color: var(--cream); border-color: var(--sun); }
+.gal-btn:focus-visible { outline: none; border-color: var(--sun); box-shadow: 0 0 14px rgb(var(--sun-rgb) / 0.4); }
+.gal-btn.is-on { color: var(--coal); background: var(--sun); border-color: var(--sun); }
+.gal-btn-danger { color: var(--ember); border-color: var(--ember); }
+.gal-btn-danger:hover { color: var(--coal); background: var(--ember); }
+
+.gal { display: grid; gap: 2.4rem; }
+.gal-month { display: grid; gap: 1.2rem; }
+.gal-person { display: grid; gap: 0.7rem; }
+
+.gal-who {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--uvy);
+}
+
+.gal-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr));
+  gap: 1rem;
+}
+
+.gal-item {
+  display: grid;
+  gap: 0.35rem;
+  align-content: start;
+  padding: 0.6rem;
+  background: rgb(var(--raise-rgb) / 0.45);
+  border: 1px solid var(--line-h);
+  border-radius: 6px;
+}
+
+.gal-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+  background: rgb(var(--coal-rgb) / 0.7);
+  display: block;
+}
+
+.gal-file {
+  display: grid;
+  place-items: center;
+  color: var(--sun);
+  font-size: 1.6rem;
+  text-decoration: none;
+}
+
+.gal-audio { width: 100%; }
+
+.gal-name { color: var(--cream); font-size: 0.85rem; word-break: break-word; }
+
+.gal-size {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--cream-dim);
+}
+
+.gal-confirm { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.gal-note { margin: 2.5rem 0; color: var(--cream-dim); text-align: center; }
+.gal-fault { color: var(--ember); }
+
+.up-done {
+  margin: 1.2rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+  color: var(--sun);
+  text-shadow: 0 0 20px rgb(var(--sun-rgb) / 0.6);
+}
+
+/* ============================================================
+   EVENTS - the poster whole, the words beside it.
+
+   Layout D (poster behind, text over a scrim) is gone. It cropped
+   a 4:5 flyer into a ~2.5:1 letterbox and threw away most of the
+   artwork including the figure it is built around, then reprinted
+   the flyer's own headline in plain sans right underneath it - the
+   card said the same words twice, in two typefaces that argued.
+
+   The poster now keeps its own shape and carries the recognition;
+   the column beside it carries what a flyer is bad at - when it
+   opens, where it is, who is on. Nothing is printed over artwork,
+   which is also what makes contrast a fixed number here rather
+   than a property of whichever poster arrives next.
+
+   Without a poster the frame wears the site's own blacklight at
+   4:5, so a gig announced by text message reads as deliberate.
+   ============================================================ */
+
+html[data-theme='home'] .ev-card {
+  --ev-poster: 7.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, var(--ev-poster)) minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+  padding: 0.9rem;
+  border: 1px solid var(--line-h);
+  border-radius: 14px;
+  background: rgb(var(--raise-rgb) / 0.55);
+}
+
+@media (min-width: 40rem) {
+  html[data-theme='home'] .ev-card {
+    --ev-poster: 11rem;
+    gap: 1.4rem; padding: 1.1rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  html[data-theme='home'] .ev-card { --ev-poster: 13rem; }
+}
+
+/* The next night. Stacked on a phone so the poster gets the full
+   width it deserves; beside the words once there is room for both. */
+html[data-theme='home'] .ev-card-hero {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.3rem, 4vw, 2rem);
+  padding: clamp(1.1rem, 4vw, 2rem);
+  border-color: rgb(var(--sun-rgb) / 0.38);
+  background:
+    radial-gradient(120% 90% at 6% 0%, rgb(var(--ember-rgb) / 0.16), transparent 60%),
+    radial-gradient(90% 80% at 100% 100%, rgb(var(--sun-rgb) / 0.12), transparent 62%),
+    rgb(var(--raise-rgb) / 0.7);
+  box-shadow: 0 0 70px rgb(var(--ember-rgb) / 0.13);
+}
+
+@media (min-width: 52rem) {
+  html[data-theme='home'] .ev-card-hero {
+    --ev-poster: 25rem;
+    grid-template-columns: minmax(0, var(--ev-poster)) minmax(0, 1fr);
+    align-items: center;
+  }
+}
+
+/* Styling hangs here and never on .tilt - TiltCard drops that class
+   entirely under prefers-reduced-motion, and the frame must survive. */
+html[data-theme='home'] .ev-frame {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgb(var(--sun-rgb) / 0.3);
+  background: var(--coal);
+  box-shadow: 0 10px 26px rgb(var(--coal-rgb) / 0.7);
+}
+
+html[data-theme='home'] .ev-card-hero .ev-frame {
+  border-radius: 14px;
+  box-shadow:
+    0 18px 50px rgb(var(--coal-rgb) / 0.8),
+    0 0 44px rgb(var(--ember-rgb) / 0.22);
+}
+
+/* height:auto, not a fixed frame: a poster arrives at whatever
+   aspect it was made in and gets shown whole, never cropped. */
+html[data-theme='home'] .ev-poster {
+  display: block; width: 100%; height: auto;
+}
+
+html[data-theme='home'] .ev-fallback {
+  aspect-ratio: 4 / 5;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(circle at 22% 18%, rgb(var(--uvy-rgb) / 0.18), transparent 42%),
+    radial-gradient(circle at 78% 30%, rgb(var(--ember-rgb) / 0.16), transparent 46%),
+    radial-gradient(circle at 50% 100%, rgb(var(--sun-rgb) / 0.34), transparent 62%),
+    var(--finale-grad);
+}
+
+html[data-theme='home'] .ev-mark { opacity: 0.16; color: var(--cream); }
+
+html[data-theme='home'] .ev-body { min-width: 0; }
+
+/* The date is the one thing the poster does not shout, so it leads,
+   under a UV tick that reads as the edge of a ticket stub. */
+html[data-theme='home'] .ev-when {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 0.15rem 0.75rem;
+  margin: 0 0 0.55rem;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--uvy);
+}
+
+html[data-theme='home'] .ev-date {
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--uvy);
+}
+
+html[data-theme='home'] .ev-doors {
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cream-dim);
+}
+
+html[data-theme='home'] .ev-card-hero .ev-when {
+  padding-left: 0.9rem; border-left-width: 3px; margin-bottom: 0.7rem;
+}
+
+html[data-theme='home'] .ev-card-hero .ev-date {
+  font-size: clamp(0.95rem, 2.6vw, 1.2rem);
+  text-shadow: 0 0 22px rgb(var(--uvy-rgb) / 0.45);
+}
+
+html[data-theme='home'] .ev-card-hero .ev-doors { font-size: 0.72rem; }
+
+html[data-theme='home'] .ev-title {
+  font-size: clamp(1.1rem, 2.8vw, 1.5rem);
+  line-height: 1.05; text-transform: uppercase;
+  color: var(--cream); margin: 0 0 0.3rem;
+}
+
+html[data-theme='home'] .ev-card-hero .ev-title {
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  line-height: 0.98; margin-bottom: 0.45rem;
+  text-shadow: 0 0 36px rgb(var(--sun-rgb) / 0.3);
+}
+
+html[data-theme='home'] .ev-billing {
+  font-style: italic; font-size: 0.85rem;
+  color: var(--sun); margin: 0 0 0.5rem;
+}
+
+html[data-theme='home'] .ev-card-hero .ev-billing {
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+}
+
+html[data-theme='home'] .ev-rule {
+  height: 1px; margin: 0.7rem 0;
+  background: linear-gradient(90deg, var(--line-h), transparent);
+}
+
+html[data-theme='home'] .ev-card-hero .ev-rule { margin: 1rem 0; }
+
+html[data-theme='home'] .ev-meta {
+  font-size: 0.8rem; line-height: 1.55;
+  color: var(--cream-dim); margin: 0 0 0.35rem;
+}
+
+html[data-theme='home'] .ev-card-hero .ev-meta { font-size: 0.9rem; }
+
+html[data-theme='home'] .ev-lineup {
+  font-size: 0.85rem; line-height: 1.6;
+  color: var(--cream); margin: 0.5rem 0 0.5rem;
+}
+
+html[data-theme='home'] .ev-card-hero .ev-lineup { font-size: 1rem; }
+
+html[data-theme='home'] .ev-label {
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--acid); margin-right: 0.4rem;
+}
+
+html[data-theme='home'] .ev-genres {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  margin: 0.6rem 0 0;
+}
+
+/* The chips carry padding, not leading - anything following them has to
+   be pushed off by hand or it sits on the chip's own border. */
+html[data-theme='home'] .ev-genres + * { margin-top: 0.75rem; }
+
+html[data-theme='home'] .ev-genre {
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ember); padding: 0.22rem 0.5rem;
+  border: 1px solid rgb(var(--ember-rgb) / 0.32);
+  border-radius: 999px;
+}
+
+html[data-theme='home'] .ev-card-hero .ev-genre { font-size: 0.66rem; padding: 0.28rem 0.62rem; }
+
+/* .h-btn declares no display, so as a bare inline its padding overflows
+   the line above instead of pushing it away. Give this one a box. */
+html[data-theme='home'] .ev-tickets {
+  display: inline-block; margin-top: 1rem;
+}
+
+html[data-theme='home'] .ev-page {
+  position: relative;
+  min-height: 100vh; color: var(--cream);
+  background:
+    radial-gradient(85% 55% at 10% -8%, rgb(var(--ember-rgb) / 0.17), transparent 60%),
+    radial-gradient(70% 45% at 96% 10%, rgb(var(--sun-rgb) / 0.1), transparent 62%),
+    radial-gradient(150% 62% at 50% 108%, rgb(var(--ember-rgb) / 0.2), transparent 68%),
+    radial-gradient(90% 40% at 50% 102%, rgb(var(--sun-rgb) / 0.16), transparent 70%),
+    var(--coal);
+}
+
+/* Same shape as .radio-atmo: fixed behind, content lifted over it.
+   Spores sit this out under prefers-reduced-motion, so the gradients
+   above have to hold the page up on their own. */
+html[data-theme='home'] .ev-atmo {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+
+html[data-theme='home'] .ev-top,
+html[data-theme='home'] .ev-main { position: relative; z-index: 1; }
+
+html[data-theme='home'] .ev-top {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem 1.4rem;
+}
+
+html[data-theme='home'] .ev-back { color: var(--sun); text-decoration: none; }
+html[data-theme='home'] .ev-back:hover { color: var(--uvy); }
+
+html[data-theme='home'] .ev-main {
+  max-width: 64rem; margin: 0 auto; padding: 1rem 1.4rem 6rem;
+}
+
+html[data-theme='home'] .ev-kicker {
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--acid); margin: 0 0 0.6rem;
+}
+
+html[data-theme='home'] .ev-h1 {
+  font-size: clamp(2.4rem, 9vw, 4.5rem); line-height: 0.95;
+  margin: 0 0 1rem; color: var(--cream);
+}
+
+html[data-theme='home'] .ev-intro {
+  max-width: 38rem; color: var(--cream-dim); line-height: 1.65; margin: 0 0 2.6rem;
+}
+
+html[data-theme='home'] .ev-list { display: grid; gap: clamp(1.6rem, 4vw, 2.6rem); }
+
+html[data-theme='home'] .ev-foot {
+  max-width: 34rem; margin: clamp(3rem, 8vw, 4.5rem) auto 0;
+  padding-top: clamp(2rem, 5vw, 2.8rem);
+  border-top: 1px solid var(--line-h);
+  text-align: center;
+}
+
+html[data-theme='home'] .ev-foot-line {
+  color: var(--cream-dim); line-height: 1.6; margin: 0 0 1.1rem;
+}
+
+/* The state that arrives the morning after the last gig. Narrower than
+   the list it replaces, so it reads as a composed page rather than a
+   card that came up short, and lit from below by the same blacklight
+   the posterless frame wears. */
+html[data-theme='home'] .ev-empty {
+  max-width: 34rem; margin: 0 auto;
+  border: 1px dashed rgb(var(--sun-rgb) / 0.32); border-radius: 14px;
+  padding: clamp(2.6rem, 8vw, 4.2rem) 1.6rem;
+  text-align: center;
+  background:
+    radial-gradient(90% 70% at 50% 112%, rgb(var(--sun-rgb) / 0.16), transparent 66%),
+    radial-gradient(70% 60% at 50% -10%, rgb(var(--ember-rgb) / 0.12), transparent 60%);
+}
+
+html[data-theme='home'] .ev-empty-title {
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  text-transform: uppercase; line-height: 1.05;
+  color: var(--cream); margin: 0 0 0.8rem;
+  text-shadow: 0 0 30px rgb(var(--sun-rgb) / 0.28);
+}
+
+html[data-theme='home'] .ev-empty-body {
+  color: var(--cream-dim); margin: 0 auto 1.4rem; max-width: 28rem; line-height: 1.6;
+}
+
+html[data-theme='home'] .ev-list-teaser { margin-top: 1.6rem; }
+html[data-theme='home'] .ev-all { margin: 1.6rem 0 0; text-align: center; }
+
+/* ============================================================
+   THE FLYER, FULL SIZE. On a phone the poster sits at card width
+   and its own text - line-up, set times, the four handles - is far
+   too small to read. Tapping it opens the real thing. The frame
+   becomes the button, so it carries a name and must never be
+   aria-hidden.
+   ============================================================ */
+
+html[data-theme='home'] .ev-frame-btn {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  display: block;
+  width: 100%;
+  cursor: zoom-in;
+  border-radius: inherit;
+}
+
+html[data-theme='home'] .ev-frame-btn:focus-visible {
+  outline: 2px solid var(--uvy);
+  outline-offset: 3px;
+}
+
+html[data-theme='home'] .ev-tilt { display: block; }
+
+html:is([data-theme='home'], [data-theme='pink']) .ev-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 4vw, 2.5rem);
+  background: rgb(var(--coal-rgb) / 0.94);
+  cursor: zoom-out;
+}
+
+html:is([data-theme='home'], [data-theme='pink']) .ev-viewer-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  /* A grid item defaults to min-height/min-width: auto, which for a
+     replaced element means its intrinsic size - and that beats
+     max-height: 100%. A 1080x1920 poster therefore rendered 1920px tall
+     and the viewer showed the top of it: all sword, no flyer. Only tall
+     artwork exposed it, so it survived the 4:5 pizza-night flyer. */
+  min-height: 0;
+  min-width: 0;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid rgb(var(--sun-rgb) / 0.3);
+  cursor: default;
+}
+
+html:is([data-theme='home'], [data-theme='pink']) .ev-viewer-close {
+  position: absolute;
+  top: clamp(0.5rem, 3vw, 1.4rem);
+  right: clamp(0.5rem, 3vw, 1.4rem);
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--cream);
+  background: rgb(var(--raise-rgb) / 0.9);
+  border: 1px solid rgb(var(--sun-rgb) / 0.35);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+html:is([data-theme='home'], [data-theme='pink']) .ev-viewer-close:hover { color: var(--uvy); }
+
+html:is([data-theme='home'], [data-theme='pink']) .ev-viewer-close:focus-visible {
+  outline: 2px solid var(--uvy);
+  outline-offset: 2px;
+}
+
+/* ---------- /joy - "Celebrate Women! All of them!" (living, unlisted) ----------
+
+   The pink skin, because the bloom below is additive light and additive
+   light needs a dark ground to add to. Nothing on this page is fetched:
+   no flyer, no embed, no photograph. The one picture is drawn here. */
+
+.jy {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+}
+
+.jy-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--pad);
+}
+
+.jy-back {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+}
+
+.jy-back:hover { text-shadow: 0 0 12px rgb(var(--sun-rgb) / 0.6); }
+
+.jy-main {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vh, 3.5rem) var(--pad) clamp(3rem, 9vh, 6rem);
+  display: grid;
+  gap: 1.6rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.jy-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+  color: var(--uvy);
+  filter: drop-shadow(0 0 10px rgb(var(--uvy-rgb) / 0.45));
+  margin: 0;
+}
+
+/* ---- the clouds (shared: /joy and /love) ---- */
+
+/* Drawn for components/Clouds.jsx, which supplies the palette. Neither
+   page carries a Spores canvas: the clouds are the atmosphere, and a
+   drift of particles over them would compete with the thing they exist to
+   let you see.
+
+   isolation: isolate gives the screen-blended volumes their own stacking
+   context, so they add to each other and to nothing else. */
+.clouds {
+  position: relative;
+  isolation: isolate;
+  width: min(40rem, 94vw);
+  aspect-ratio: 16 / 9;
+  margin: clamp(-1rem, -2vh, 0rem) 0 clamp(-3rem, -6vw, -1.5rem);
+  pointer-events: none;
+}
+
+/* Weather rather than illustration: the field hangs behind the whole page
+   and the words sit inside the light instead of under it. Bigger than the
+   viewport on every side, so no edge of the field is ever on screen. */
+.clouds-full {
+  position: fixed;
+  inset: -10%;
+  z-index: 0;
+  width: auto;
+  aspect-ratio: auto;
+  margin: 0;
+}
+
+/* Each volume is one colour of light: an off-round blob, tilted its own
+   way, blurred past any edge, screen-blended so overlaps add. Three
+   things together make it read as cloud rather than as a lamp - the
+   asymmetric border-radius, the blur that outruns the gradient, and no
+   two being the same size or angle. */
+.clouds span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--w);
+  height: var(--h);
+  border-radius: 58% 42% 51% 49% / 47% 55% 45% 53%;
+  background: radial-gradient(closest-side at 50% 50%, var(--hue) 0%, rgb(0 0 0 / 0) 76%);
+  filter: blur(20px);
+  mix-blend-mode: screen;
+  opacity: 0.88;
+  transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(var(--rot));
+  animation: cloud-drift var(--dur) ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Behind a whole page the light has to be weather, not spotlights: much
+   softer, much dimmer, and spread wide enough that no single lobe sits
+   under a paragraph. */
+.clouds-full span {
+  filter: blur(70px);
+  opacity: 0.5;
+}
+
+/* THE SCRIM, and the reason the full-bleed variant is safe to read on.
+   Screen-blended light under body text is a contrast problem that MOVES:
+   a paragraph legible now is over a bright lobe forty seconds later. A
+   veil of the page's own ground goes over the light and under the words,
+   which caps how bright the background can ever get. Inside the isolated
+   group, blending normally, so it darkens the clouds rather than adding
+   to them. */
+.clouds-scrim {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: rgb(var(--coal-rgb) / 0.45);
+  mix-blend-mode: normal;
+}
+
+/* Cloud speed, not lens-flare speed: every --dur is between 23s and 37s
+   and none divides into another, so the arrangement takes minutes to come
+   back around. The transform chain has to repeat the static one above in
+   both keyframes, or the first frame jumps. */
+@keyframes cloud-drift {
+  from {
+    transform: translate(-50%, -50%) translate(var(--x), var(--y)) rotate(var(--rot)) scale(1);
+  }
+  to {
+    transform: translate(-50%, -50%) translate(calc(var(--x) * -0.5), calc(var(--y) * -0.55))
+      rotate(calc(var(--rot) * -1.4)) scale(1.14);
+  }
+}
+
+/* Held still they still overlap and still make their colours - the reader
+   who asked for stillness loses the drift, not the picture. */
+@media (prefers-reduced-motion: reduce) {
+  .clouds span { animation: none; }
+}
+
+/* ---- the call ---- */
+
+.jy-title {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.1rem;
+}
+
+/* the line is a flex row of whole words, so a break can only ever land in
+   a space - never inside a word, which is what per-character spans invite */
+.jy-call {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.28em;
+  row-gap: 0.05em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 7.6vw, 4rem);
+  line-height: 1.05;
+  color: var(--cream);
+  /* a dark halo, not a glow: this line is read against light rather than
+     against the page, so it needs the ground carried with it */
+  text-shadow: 0 2px 18px rgb(var(--coal-rgb) / 0.95), 0 0 46px rgb(var(--coal-rgb) / 0.9);
+}
+
+/* the second half is the whole point, so it is the loud one: the bloom's
+   own colours run through it left to right */
+.jy-all {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.6rem, 6.4vw, 3.4rem);
+  line-height: 1.1;
+  background: linear-gradient(90deg, #ff3ecf, #ff7a2e, #ffb32e, #b8ff2e, #37f5e0, #5bc8ff, #8a5cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.jy-word { white-space: nowrap; }
+
+.jy-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream-dim);
+  margin: 0.4rem 0 0;
+}
+
+/* ---- the words ---- */
+
+.jy-intro {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--cream);
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+.jy-block { width: 100%; }
+
+.jy-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0 0 1rem;
+}
+
+/* Left-aligned inside the centred column, and unnumbered on purpose - a
+   numbered list of people is a ranking, which is the one thing this page
+   is against. Each line carries a dot of the bloom's own light instead. */
+.jy-list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 34rem;
+  display: grid;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.jy-list li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.7rem;
+  color: var(--cream);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.jy-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--dot);
+  box-shadow: 0 0 10px var(--dot);
+  transform: translateY(-0.1em);
+}
+
+.jy-list-note {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
+  margin: 1.1rem auto 0;
+  max-width: 50ch;
+}
+
+/* the one paragraph that is allowed to be warm rather than dry */
+.jy-inner {
+  margin: 0 auto;
+  max-width: 44ch;
+  color: var(--cream);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  border-top: 1px solid rgb(var(--sun-rgb) / 0.2);
+  border-bottom: 1px solid rgb(var(--sun-rgb) / 0.2);
+  padding: 1.4rem 0;
+}
+
+.jy-wink {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
+  margin: 0 auto;
+  max-width: 54ch;
+}
+
+.jy-close {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0.6rem 0 0;
+}
+
+/* ---------- /love - the warm twin of /joy (living, unlisted) ----------
+
+   Same construction, Nu Breed register: the warm skin, the warm clouds,
+   and one shouted line where /joy has its list. Leaner than /joy on
+   purpose - /joy names them, this one says what the naming is for, and a
+   second long list would only dilute the one line that matters here. */
+
+.lv {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+}
+
+.lv-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--pad);
+}
+
+.lv-back {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+}
+
+.lv-back:hover { text-shadow: 0 0 12px rgb(var(--sun-rgb) / 0.6); }
+
+.lv-main {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 7vh, 4.5rem) var(--pad) clamp(3rem, 9vh, 6rem);
+  display: grid;
+  gap: 1.6rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.lv-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+  color: var(--acid);
+  filter: drop-shadow(0 0 10px rgb(var(--acid-rgb) / 0.45));
+  margin: 0;
+}
+
+/* ---- the word ---- */
+
+.lv-title {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+}
+
+.lv-mast {
+  display: flex;
+  justify-content: center;
+}
+
+/* One word, so it can be enormous. The warm clouds run behind it and the
+   dark halo is what keeps it readable while they drift underneath. */
+.lv-word {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(4rem, 22vw, 11rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  /* Acid green, the kicker's colour, carried up to the masthead - it is
+     the one hue on the warm skin that the warm clouds never make on their
+     own, so the word stays the brightest thing on the page instead of
+     joining the weather behind it.
+
+     Two shadows, in this order and both needed: the near-black pair holds
+     the letterforms while lit clouds drift underneath, and the acid halo
+     on top puts the word back into the same light. Glow alone on a moving
+     bright ground is unreadable; ground alone is a flat green word on a
+     page made of light. */
+  color: var(--acid);
+  text-shadow:
+    0 2px 22px rgb(var(--coal-rgb) / 0.95),
+    0 0 60px rgb(var(--coal-rgb) / 0.85),
+    0 0 34px rgb(var(--acid-rgb) / 0.5);
+}
+
+.lv-sub {
+  font-family: var(--font-mono);
+  font-size: clamp(0.8rem, 2.6vw, 1rem);
+  letter-spacing: 0.24em;
+  text-indent: 0.24em;
+  text-transform: uppercase;
+  color: var(--sun);
+}
+
+/* ---- the words ---- */
+
+.lv-intro {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--cream);
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+.lv-block { width: 100%; }
+
+.lv-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0 0 0.9rem;
+}
+
+.lv-hope {
+  margin: 0 auto;
+  max-width: 48ch;
+  color: var(--cream);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+/* ---- the one shouted line ---- */
+
+/* A stamp, not a paragraph: the page has exactly one raised voice on it
+   and it should look like the only one. Gold on the warm ground, boxed so
+   it reads as an aside addressed elsewhere - which is what it is. */
+.lv-silver {
+  margin: 0 auto;
+  max-width: 40rem;
+  padding: clamp(1.2rem, 4vw, 1.8rem) clamp(1rem, 4vw, 2rem);
+  border: 1px solid rgb(var(--sun-rgb) / 0.4);
+  border-radius: 14px;
+  background: rgb(var(--raise-rgb) / 0.6);
+  box-shadow: 0 0 40px rgb(var(--ember-rgb) / 0.15);
+}
+
+.lv-silver-call {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 6vw, 2.6rem);
+  line-height: 1.1;
+  color: var(--sun);
+  text-shadow: 0 0 26px rgb(var(--sun-rgb) / 0.45);
+  margin: 0;
+}
+
+.lv-silver-gloss {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.9;
+  color: var(--cream);
+  margin: 0.9rem 0 0;
+}
+
+/* the quiet correction under the loud line - it has to be read, but it is
+   not the thing being shouted */
+.lv-note {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
+  margin: 0 auto;
+  max-width: 54ch;
+}
+
+.lv-close {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0.6rem 0 0;
+}
+
+/* ---------- the mosaic (/pluribus) ---------- */
+
+/* Drawn for components/Mosaic.jsx. A square grid, masked to a disc: the
+   tiles at the corners are thrown away by the mask rather than by any
+   layout, so the count stays a clean 12 x 12 and the shape stays a
+   circle. Both mask properties are needed - Safari still wants the
+   prefixed one. */
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(2px, 0.6vw, 5px);
+  width: min(26rem, 80vw);
+  aspect-ratio: 1;
+  margin: 0.5rem 0 0.2rem;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 52%, rgb(0 0 0 / 0) 74%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 52%, rgb(0 0 0 / 0) 74%);
+  pointer-events: none;
+}
+
+/* Each tile is one colour and nothing else. Saturation and lightness are
+   fixed so the only thing that varies across the field is hue - the point
+   being that they differ in kind, not in worth. */
+.mosaic span {
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: hsl(var(--h) 88% 62%);
+  animation: tile-breathe 6s ease-in-out infinite alternate;
+  animation-delay: var(--delay);
+}
+
+/* Nothing moves far: the field should look alive, not busy. Opacity only,
+   and never to zero - a tile that vanishes reads as a hole in the picture
+   rather than as one of many. */
+@keyframes tile-breathe {
+  from { opacity: 0.62; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mosaic span { animation: none; opacity: 0.9; }
+}
+
+/* ---------- /pluribus - E pluribus unum (living, unlisted) ----------
+
+   The cool skin, the mosaic above, and one framed paragraph. Same column
+   and rhythm as /joy and /love - it is the third of one family, not a
+   third design. */
+
+.pl {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+}
+
+.pl-top {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--pad);
+}
+
+.pl-back {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--cream);
+}
+
+.pl-back:hover { text-shadow: 0 0 12px rgb(var(--sun-rgb) / 0.6); }
+
+.pl-main {
+  position: relative;
+  z-index: 1;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 5vh, 3.5rem) var(--pad) clamp(3rem, 9vh, 6rem);
+  display: grid;
+  gap: 1.6rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.pl-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+  color: var(--uvy);
+  filter: drop-shadow(0 0 10px rgb(var(--uvy-rgb) / 0.45));
+  margin: 0;
+}
+
+/* ---- the motto ---- */
+
+.pl-title {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.05rem;
+}
+
+.pl-many {
+  display: flex;
+  justify-content: center;
+}
+
+.pl-word {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 8vw, 4rem);
+  line-height: 1.05;
+  white-space: nowrap;
+  color: var(--cream);
+  text-shadow: 0 0 24px rgb(var(--sun-rgb) / 0.5);
+}
+
+/* The second half is the one the mosaic just demonstrated, so it gets the
+   whole spectrum run through it - the many, arriving as one word. */
+.pl-one {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 12vw, 5.6rem);
+  line-height: 1;
+  background: linear-gradient(
+    90deg, #ff3ecf, #ff7a2e, #ffb32e, #b8ff2e, #37f5e0, #5bc8ff, #8a5cff, #ff3ecf
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.pl-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0.2rem 0 0;
+}
+
+/* ---- the words ---- */
+
+.pl-intro {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--cream);
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+.pl-block { width: 100%; }
+
+.pl-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-indent: 0.3em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0 0 1rem;
+}
+
+/* Unnumbered, for the same reason the list on /joy is: these are not
+   ranked and not a procedure. Left-aligned in the centred column, because
+   four sentences of different lengths read as a list that way. */
+.pl-floor {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 36rem;
+  display: grid;
+  gap: 0.8rem;
+  text-align: left;
+}
+
+.pl-floor li {
+  padding: 0.75rem 1rem;
+  border-left: 2px solid rgb(var(--uvy-rgb) / 0.5);
+  background: rgb(var(--raise-rgb) / 0.5);
+  border-radius: 0 8px 8px 0;
+  color: var(--cream);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* ---- the limit ---- */
+
+/* Framed, and the only warm thing on a cool page: this is the sentence
+   the rest of the page stands on, and a reader who skims everything else
+   should still land on it. */
+.pl-limit {
+  margin: 0 auto;
+  max-width: 42rem;
+  padding: clamp(1.2rem, 4vw, 1.9rem) clamp(1rem, 4vw, 2rem);
+  /* --wick has no -rgb companion in either skin, so the frame borrows
+     --sun's channels for the faint edge and --wick itself for the spine */
+  border: 1px solid rgb(var(--sun-rgb) / 0.3);
+  border-left: 4px solid var(--wick);
+  border-radius: 12px;
+  background: rgb(var(--raise-rgb) / 0.66);
+  text-align: left;
+}
+
+.pl-limit-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--wick);
+  margin: 0 0 0.7rem;
+}
+
+.pl-limit-text {
+  margin: 0;
+  color: var(--cream);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.pl-note,
+.pl-origin {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.9;
+  color: var(--cream-dim);
+  margin: 0 auto;
+  max-width: 54ch;
+}
+
+/* the one line that is not an argument */
+.pl-bleed {
+  margin: 0 auto;
+  max-width: 40ch;
+  color: var(--cream);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  border-top: 1px solid rgb(var(--sun-rgb) / 0.2);
+  border-bottom: 1px solid rgb(var(--sun-rgb) / 0.2);
+  padding: 1.3rem 0;
+}
+
+.pl-close {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sun);
+  margin: 0.4rem 0 0;
+}

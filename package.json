@@ -1,0 +1,30 @@
+{
+  "name": "titis-on-decks",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "bun": ">=1.4.0"
+  },
+  "scripts": {
+    "dev": "bun --bun vite",
+    "build": "bun --bun vite build && bun scripts/build-og-pages.mjs",
+    "preview": "bun --bun vite preview",
+    "test": "bun test --isolate",
+    "test:watch": "bun test --isolate --watch",
+    "sync-uploads": "bun scripts/sync-uploads.mjs"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.8.0",
+    "motion": "^13.1.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.0.1",
+    "vite": "^8.2.2"
+  }
+}

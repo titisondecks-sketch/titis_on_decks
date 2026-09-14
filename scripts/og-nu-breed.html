@@ -1,0 +1,132 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>NU BREED - OG card source</title>
+
+<!-- The link-preview card for /nubreed, composed in the DOM like the flyer.
+     1200x630 because that is what the site's other card is, and what the
+     scrapers crop to. The flyer itself is 9:16 and would be gutted by a
+     landscape crop, so this re-lays the same night out sideways rather
+     than squashing the poster.
+
+       google-chrome --headless --disable-gpu --hide-scrollbars \
+         --force-prefers-reduced-motion --virtual-time-budget=6000 \
+         --window-size=1200,630 --screenshot=og.png scripts/og-nu-breed.html
+-->
+
+<link rel="stylesheet" href="../src/styles/fonts.css">
+
+<style>
+  :root {
+    --coal: #120a03;
+    --sun: #ffb32e;
+    --ember: #ff7a2e;
+    --uvy: #f4ff3d;
+    --acid: #b8ff2e;
+    --cream: #fff4e0;
+    --cream-dim: #d8b487;
+    --font-display: 'EMOTIQ', 'Arial Black', sans-serif;
+    --font-body: 'Sora', system-ui, sans-serif;
+    --font-mono: 'Space Mono', ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--coal); }
+
+  .card {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: var(--coal);
+    display: grid;
+    grid-template-columns: 1fr 470px;
+  }
+
+  .words {
+    padding: 62px 20px 62px 68px;
+    display: grid;
+    align-content: center;
+    gap: 0;
+  }
+
+  .chapter {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    white-space: nowrap;   /* it is one line or it is noise */
+    color: var(--acid);
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-size: 122px;
+    line-height: 0.94;
+    color: var(--cream);
+    text-shadow: 0 0 30px rgba(255, 179, 46, 0.5), 0 0 90px rgba(255, 122, 46, 0.38);
+  }
+
+  .when {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin-top: 26px;
+  }
+
+  .lineup {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 29px;
+    color: var(--cream);
+    margin-top: 14px;
+  }
+
+  .lineup .sep { color: var(--ember); padding: 0 5px; }
+
+  .foot {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-top: 26px;
+  }
+
+  /* the artwork holds the right edge; the seam is a wash, not a hard cut,
+     so the sunset reads as one picture with the panel */
+  .art { position: relative; overflow: hidden; }
+
+  .art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 54% 30%;   /* keeps the raised sword and the laugh */
+    display: block;
+  }
+
+  .art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--coal) 0%, rgba(18, 10, 3, 0.55) 12%, rgba(18, 10, 3, 0) 34%);
+  }
+</style>
+
+<div class="card">
+  <div class="words">
+    <p class="chapter">Multiverse IV &middot; Amazonia &middot; Day 3 of 3</p>
+    <h1 class="title">NU BREED</h1>
+    <p class="when">Sun 23 Aug 2026 &middot; from 14:00</p>
+    <p class="lineup">
+      Lutzi<span class="sep">&middot;</span>Glitta<span class="sep">&middot;</span>Malediven Toni
+    </p>
+    <p class="foot">TiTis on Decks</p>
+  </div>
+
+  <div class="art">
+    <img src="../public/media/posters/nu-breed-visualizer.jpg" alt="">
+  </div>
+</div>

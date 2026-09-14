@@ -1,0 +1,124 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "bunVersion": "1.4.x",
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.staging.titisondecks.com"
+        }
+      ],
+      "destination": "https://staging.titisondecks.com/",
+      "permanent": false
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.staging.titisondecks.com"
+        }
+      ],
+      "destination": "https://staging.titisondecks.com/:path*",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/radio",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pink",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/carla",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/glitta",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/nubreed",
+      "destination": "/nubreed.html"
+    },
+    {
+      "source": "/joy",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/love",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/pluribus",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/soon",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/upload",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/events",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/press",
+      "destination": "/press.pdf"
+    },
+    {
+      "source": "/nico",
+      "destination": "/nico.html"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "uploads.titisondecks.com"
+        }
+      ],
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "staging.titisondecks.com"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "uploads.titisondecks.com"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>NU BREED - flyer source</title>
+
+<!-- The flyer for MULTIVERSE IV · Amazonia, composed in the DOM so it can be
+     re-rendered when a word changes instead of being re-drawn by hand.
+
+     Render it with:
+       google-chrome --headless --disable-gpu --hide-scrollbars \
+         --force-prefers-reduced-motion --virtual-time-budget=6000 \
+         --window-size=1080,1920 --screenshot=flyer.png \
+         scripts/flyer-nu-breed.html
+
+     1080x1920 - the artwork is 9:16 native, so a story-shaped flyer shows
+     it whole. The type sits on flat coal, never on the image: contrast
+     over artwork cannot be computed, contrast over #120a03 can. -->
+
+<link rel="stylesheet" href="../src/styles/fonts.css">
+
+<style>
+  :root {
+    --coal: #120a03;
+    --sun: #ffb32e;
+    --ember: #ff7a2e;
+    --uvy: #f4ff3d;
+    --acid: #b8ff2e;
+    --cream: #fff4e0;
+    --cream-dim: #d8b487;
+    --font-display: 'EMOTIQ', 'Arial Black', sans-serif;
+    --font-body: 'Sora', system-ui, sans-serif;
+    --font-mono: 'Space Mono', ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--coal); }
+
+  .flyer {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: var(--coal);
+    display: grid;
+    grid-template-rows: 1450px 470px;
+  }
+
+  /* ---------- the artwork ---------- */
+
+  .art { position: relative; overflow: hidden; }
+
+  .art img {
+    width: 100%;
+    height: 1905px;          /* the artwork's own pixels, 1:1 - it is a frame
+                                lifted from ANNI_4_status_3.mp4 at ~13.3s and
+                                de-letterboxed, so nothing is upscaled.
+                                Top-anchored, so the raised sword and the
+                                whole laugh survive the crop. */
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* No type sits on the artwork, so nothing here is a legibility scrim -
+     this only lands the image into the panel at the bottom. A cool black
+     over a sunset greys it out, so the wash is warm. */
+  .art::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(35, 18, 5, 0) 80%, rgba(24, 13, 4, 0.72) 93%, var(--coal) 100%);
+  }
+
+  /* ---------- the type panel ---------- */
+
+  .panel {
+    position: relative;
+    background: var(--coal);
+    padding: 40px 64px 44px;
+    display: grid;
+    justify-items: center;
+    align-content: center;
+    gap: 0;
+    text-align: center;
+  }
+
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 64px;
+    right: 64px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--sun) 22%, var(--uvy) 50%, var(--sun) 78%, transparent);
+    opacity: 0.85;
+  }
+
+  .chapter {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin-bottom: 16px;
+  }
+
+  .title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 132px;
+    line-height: 0.94;
+    letter-spacing: 0.02em;
+    color: var(--cream);
+    text-shadow: 0 0 34px rgba(255, 179, 46, 0.55), 0 0 96px rgba(255, 122, 46, 0.4);
+  }
+
+  .when {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 31px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin-top: 20px;
+  }
+
+  .lineup {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 35px;
+    letter-spacing: 0.05em;
+    color: var(--cream);
+    margin-top: 16px;
+  }
+
+  .lineup .sep { color: var(--ember); padding: 0 6px; }
+
+  .foot {
+    font-family: var(--font-mono);
+    font-size: 21px;
+    letter-spacing: 0.1em;
+    color: var(--cream-dim);
+    margin-top: 20px;
+  }
+</style>
+
+<div class="flyer">
+  <div class="art">
+    <img src="../src/assets/anni-amazon.jpg" alt="">
+  </div>
+
+  <div class="panel">
+    <p class="chapter">Multiverse IV &middot; Amazonia &middot; Day 3 of 3</p>
+    <h1 class="title">NU BREED</h1>
+    <p class="when">Sun 23 Aug 2026 &middot; from 14:00</p>
+    <p class="lineup">
+      Lutzi<span class="sep">&middot;</span>Glitta<span class="sep">&middot;</span>Malediven Toni
+    </p>
+    <p class="foot">TiTis on Decks &middot; hosted by Anni Amazon</p>
+  </div>
+</div>
