@@ -1,0 +1,104 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>AGE OF AQUARIA - OG card source</title>
+
+<!-- The link-preview card for /aquaria, built like the /flowers card: the
+     poster hangs whole (its edges carry raised hands), the words sit on
+     flat ground beside it. Pink night palette, the page's own skin.
+
+       google-chrome --headless --disable-gpu --hide-scrollbars \
+         --force-prefers-reduced-motion --virtual-time-budget=6000 \
+         --window-size=1200,630 --screenshot=og.png scripts/og-aquaria.html
+-->
+
+<link rel="stylesheet" href="../src/styles/fonts.css">
+
+<style>
+  :root {
+    --coal: #08041a;
+    --magenta: #ff3ecf;
+    --cyan: #37f5e0;
+    --violet: #8a5cff;
+    --acid: #b8ff2e;
+    --cream: #f0e9ff;
+    --cream-dim: #a99cc9;
+    --font-display: 'EMOTIQ', 'Arial Black', sans-serif;
+    --font-body: 'Sora', system-ui, sans-serif;
+    --font-mono: 'Space Mono', ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--coal); }
+
+  .card {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background:
+      radial-gradient(520px 360px at 74% 52%, rgba(255, 62, 207, 0.18), transparent 70%),
+      radial-gradient(420px 300px at 16% 34%, rgba(55, 245, 224, 0.1), transparent 70%),
+      var(--coal);
+    display: grid;
+    grid-template-columns: 1fr 696px;
+    align-items: center;
+  }
+
+  .words { padding: 0 24px 0 64px; display: grid; }
+
+  .chapter {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--acid);
+    margin-bottom: 18px;
+  }
+
+  .title { font-family: var(--font-display); font-weight: 400; line-height: 0.98; }
+  .title span { display: block; }
+  .title .age { font-size: 92px; color: var(--magenta); text-shadow: 0 0 18px rgba(255, 62, 207, 0.9), 0 0 70px rgba(138, 92, 255, 0.5); }
+  .title .of {
+    font-family: var(--font-mono);
+    font-size: 17px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin: 10px 0 8px;
+    padding-left: 4px;
+  }
+  .title .aq { font-size: 80px; color: var(--cyan); text-shadow: 0 0 18px rgba(55, 245, 224, 0.85), 0 0 70px rgba(55, 245, 224, 0.4); }
+
+  .sub { font-family: var(--font-body); font-weight: 600; font-size: 25px; color: var(--cream); margin-top: 20px; }
+
+  .foot {
+    font-family: var(--font-mono);
+    font-size: 15px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    margin-top: 22px;
+  }
+
+  .art { padding-right: 56px; }
+  .art img {
+    display: block;
+    width: 640px;
+    height: 427px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 62, 207, 0.4);
+    box-shadow: 0 0 46px rgba(255, 62, 207, 0.32), 0 26px 70px rgba(0, 0, 0, 0.6);
+  }
+</style>
+
+<div class="card">
+  <div class="words">
+    <p class="chapter">TiTis on Decks presents</p>
+    <h1 class="title"><span class="age">Age</span><span class="of">of</span><span class="aq">Aquaria</span></h1>
+    <p class="sub">Seven women. One rising tide.</p>
+    <p class="foot">One shared frequency</p>
+  </div>
+  <div class="art">
+    <img src="../public/media/aquaria/age-of-aquaria-1200.webp" alt="">
+  </div>
+</div>

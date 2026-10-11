@@ -89,6 +89,16 @@
       "destination": "/flowers.html"
     },
     {
+      "source": "/aquaria",
+      "has": [
+        {
+          "type": "host",
+          "value": "staging.titisondecks.com"
+        }
+      ],
+      "destination": "/aquaria.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "has": [
         {
