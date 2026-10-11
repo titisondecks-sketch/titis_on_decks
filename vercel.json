@@ -79,6 +79,16 @@
       "destination": "/nico.html"
     },
     {
+      "source": "/flowers",
+      "has": [
+        {
+          "type": "host",
+          "value": "staging.titisondecks.com"
+        }
+      ],
+      "destination": "/flowers.html"
+    },
+    {
       "source": "/((?!api/).*)",
       "has": [
         {
